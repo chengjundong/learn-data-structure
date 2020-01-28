@@ -112,7 +112,8 @@ public class JaredArray {
 		size--;
 		
 		// if size is less then half of capacity, then shrink it
-		if(size == data.length/2) {
+		// to avoid resize to 0 because of integer divid
+		if(size == data.length/4 && data.length/2 != 0) {
 			resize(data.length/2);
 		}
 		
