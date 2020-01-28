@@ -1,5 +1,6 @@
 package jd.cheng.array;
 
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class JaredArray {
@@ -62,7 +63,7 @@ public class JaredArray {
 		
 		// once array is full, then enlarge it at first
 		if(this.size == data.length) {
-			resize(this.data.length * 2);
+			resize(this.data.length << 1);
 		}
 		
 		// move existing data
@@ -76,6 +77,7 @@ public class JaredArray {
 	
 	/**
 	 * @param newCapacity -- capacity of resized array
+	 * @see {@link Arrays#copyOf(int[], int)}
 	 */
 	private void resize(int newCapacity) {
 		// new array has double capacity
@@ -113,8 +115,8 @@ public class JaredArray {
 		
 		// if size is less then half of capacity, then shrink it
 		// to avoid resize to 0 because of integer divid
-		if(size == data.length/4 && data.length/2 != 0) {
-			resize(data.length/2);
+		if(size == data.length >> 2 && data.length >> 1 != 0) {
+			resize(data.length >> 1);
 		}
 		
 		return result;
