@@ -40,6 +40,14 @@ public class JaredArray {
 		}
 	}
 	
+	public int getFirst() {
+		return this.get(0);
+	}
+	
+	public int getLast() {
+		return 0 == size ? this.getFirst() : this.get(this.size - 1);
+	}
+	
 	public void set(int index, int element) {
 		if(0 > index || size <= index) {
 			throw new IllegalArgumentException("input index is invalid");
@@ -99,7 +107,7 @@ public class JaredArray {
 		}
 		
 		// check index
-		if(index < 0 || index >= size-1) {
+		if(index < 0 || index > size-1) {
 			throw new IllegalArgumentException("invalid index");
 		}
 		
