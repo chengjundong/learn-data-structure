@@ -4,7 +4,7 @@ import java.util.StringJoiner;
 
 import jd.cheng.array.JaredArray;
 
-public class JaredArrayStack implements Stack {
+public class JaredArrayStack implements JaredStack {
 
 	private JaredArray array;
 	

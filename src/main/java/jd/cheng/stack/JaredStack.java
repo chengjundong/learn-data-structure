@@ -1,6 +1,6 @@
 package jd.cheng.stack;
 
-public interface Stack {
+public interface JaredStack {
 
 	int size();
 	boolean isEmpty();
