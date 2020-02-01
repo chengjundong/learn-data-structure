@@ -166,7 +166,41 @@ public class JaredLinkedList<E> {
 		return remove(size-1);
 	}
 	
+	public void removeByValue(E e) {
+		if(isEmpty()) {
+			throw new IllegalStateException("It is empty, nothing to remove!");
+		}
+		
+		Node<E> prev = dummyHead;
+		while(prev.next != null) {
+			if(Objects.equals(prev.next.value, e)) {
+				Node<E> target = prev.next;
+				prev.next = target.next;
+				target.next = null;
+				size--;
+			} else {
+				prev = prev.next;
+			}
+		}
+	}
+	
 	public E getTail() {
 		return null == tail ? null : tail.value;
+	}
+	
+	public E getByValue(E e) {
+		if(isEmpty()) {
+			throw new IllegalStateException("It is empty, nothing to remove!");
+		}
+		
+		Node<E> prev = dummyHead;
+		while(prev.next != null) {
+			if(Objects.equals(prev.next.value, e)) {
+				return prev.next.value;
+			} else {
+				prev = prev.next;
+			}
+		}
+		return null;
 	}
 }

@@ -61,10 +61,10 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 			return new TreeNode(e);
 		}
 		
-		if(node.value.compareTo(e) == 1) {
+		if(node.value.compareTo(e) > 0) {
 			// link to the left by recursion
 			node.left = addByRecursion(node.left, e);
-		} else if(node.value.compareTo(e) == -1) {
+		} else if(node.value.compareTo(e) < 0) {
 			// link to the right by recursion
 			node.right = addByRecursion(node.right, e);
 		}
@@ -82,12 +82,30 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 			return false;
 		} else if(n.value.compareTo(e) == 0) {
 			return true;
-		} else if(n.value.compareTo(e) == 1){
+		} else if(n.value.compareTo(e) > 0){
 			// gt n.value, go to left
 			return contains(n.left, e);
 		} else {
 			// lt n.value, go to right
 			return contains(n.right, e);
+		}
+	}
+	
+	public E get(E e) {
+		return get(root, e);
+	}
+	
+	private E get(TreeNode n, E e) {
+		if(n == null) {
+			return null;
+		} else if(n.value.compareTo(e) == 0) {
+			return n.value;
+		} else if(n.value.compareTo(e) > 0){
+			// gt n.value, go to left
+			return get(n.left, e);
+		} else {
+			// lt n.value, go to right
+			return get(n.right, e);
 		}
 	}
 	
@@ -301,10 +319,10 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 	private TreeNode remove(TreeNode n, E value) {
 		if(n == null) {
 			return null;
-		} else if(n.value.compareTo(value) == 1) {
+		} else if(n.value.compareTo(value) > 0) {
 			n.left = remove(n.left, value);
 			return n;
-		} else if(n.value.compareTo(value) == -1) {
+		} else if(n.value.compareTo(value) < 0) {
 			n.right = remove(n.right, value);
 			return n;
 		} else {

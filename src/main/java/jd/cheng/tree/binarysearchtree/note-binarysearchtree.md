@@ -2,6 +2,8 @@
 ## 二叉树定义
 * 具有唯一根节点
 * 每个节点最多，有一个左子，一个右子
+* 左子，也叫前驱，predecessor
+* 右子，也叫后继，successor
 * 没有子节点的为叶子节点
 * 每个节点最多一个父节点
 * 具有天然递归结构，**树操作大部分需要递归**
@@ -100,3 +102,24 @@ ELSE
 7. 返回M
 
 *参考，[Hibbard Deletion](https://www.ucloud.cn/yun/77241.html)*
+
+## 其他操作
+### floor & ceil
+在二分搜索树中，找某个值的floor和celi
+- floor：比该值小的最大的数
+- ceil：比该值大的最小的数
+
+### rank & select
+- rank: 找出排名为N的数字是多少？
+- select: 找出某个值的排名 
+
+### node.size
+- 某个节点的子节点的数量
+
+### node.depth
+- 某个节点的深度
+
+### node.count
+- 支持重复数据
+- 当有重复数据的时候，增加count，删除时，减少count
+- 当count为0时，需要删除节点

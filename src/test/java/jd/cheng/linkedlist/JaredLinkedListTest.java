@@ -43,5 +43,7 @@ public class JaredLinkedListTest {
 		assertThat(list.getTail()).isEqualTo(70);
 		assertThat(list.removeLast()).isEqualTo(70);
 		assertThat(list.getTail()).isEqualTo(50);
+		list.removeByValue(50);
+		assertThat(list.size()).isEqualTo(1);
 	}
 }
