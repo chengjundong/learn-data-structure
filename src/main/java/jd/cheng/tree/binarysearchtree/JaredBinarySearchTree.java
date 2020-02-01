@@ -10,11 +10,9 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 		private E value;
 		private TreeNode left;
 		private TreeNode right;
-		private int depth;
 		
-		public TreeNode(E value, int depth) {
+		public TreeNode(E value) {
 			this.value = value;
-			this.depth = depth;
 		}
 		
 		/**
@@ -22,15 +20,13 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 		 */
 		@Override
 		public String toString() {
-			return new StringBuilder().append(value)
-					.append("[").append(depth).append("]").toString();
+			return value.toString();
 		}
 		
 	}
 	
 	private TreeNode root;
 	private int size;
-	private int treeDepth;
 	
 	public JaredBinarySearchTree() {
 		
@@ -43,10 +39,6 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 	public int size() {
 		return this.size;
 	}
-	
-	public int depth() {
-		return this.treeDepth;
-	}
 
 	/**
 	 * add element to tree by recursion
@@ -57,28 +49,24 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 		if(null == e) {
 			throw new IllegalArgumentException("invalid input: NULL!");
 		}
-		root = addByRecursion(root, e, 0);
+		root = addByRecursion(root, e);
 		return this;
 	}
 	
-	private TreeNode addByRecursion(TreeNode node, E e, int currentDepth) {
+	private TreeNode addByRecursion(TreeNode node, E e) {
 		// if input is null, then return a new node
 		if(node == null) {
 			size++;
-			// set tree depth
-			if(currentDepth - this.treeDepth > 0) {
-				this.treeDepth = currentDepth;
-			}
 			// create a new node
-			return new TreeNode(e, currentDepth);
+			return new TreeNode(e);
 		}
 		
 		if(node.value.compareTo(e) == 1) {
 			// link to the left by recursion
-			node.left = addByRecursion(node.left, e, currentDepth+1);
+			node.left = addByRecursion(node.left, e);
 		} else if(node.value.compareTo(e) == -1) {
 			// link to the right by recursion
-			node.right = addByRecursion(node.right, e, currentDepth+1);
+			node.right = addByRecursion(node.right, e);
 		}
 		
 		// return self since no self-value change
@@ -225,5 +213,119 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 		System.out.println("level-order traverse: " + sj.toString());
 		
 		return this;
+	}
+	
+	/**
+	 * @return the min value
+	 */
+	public E min() {
+		return isEmpty() ? null : min(root).value;
+	}
+	
+	private TreeNode min(TreeNode n) {
+		return null == n.left ? n: min(n.left);
+	}
+	
+	/**
+	 * @return the max value
+	 */
+	public E max() {
+		return isEmpty() ? null : max(root).value;
+	}
+	
+	private TreeNode max(TreeNode n) {
+		return null == n.right ? n : max(n.right);
+	}
+	
+	public E removeMin() {
+		if(isEmpty()) {
+			throw new IllegalStateException("nothing to remove");
+		}
+		// it is used to store the min value to return
+		TreeNode result = new TreeNode(null);
+		root = removeMin(root, result);
+		return result.value;
+	}
+	
+	private TreeNode removeMin(TreeNode n, TreeNode min) {
+		if(n == null) {
+			return null;
+		}
+		else if(n.left == null) {
+			min.value = n.value;
+			TreeNode result = n.right;
+			n.right = null;
+			size--;
+			return result;
+		} else {
+			n.left = removeMin(n.left, min);
+			return n;
+		}
+	}
+	
+	public E removeMax() {
+		if(isEmpty()) {
+			throw new IllegalStateException("nothing to remove");
+		}
+		// it is used to store the min value to return
+		TreeNode result = new TreeNode(null);
+		root = removeMax(root, result);
+		return result.value;
+	}
+	
+	private TreeNode removeMax(TreeNode n, TreeNode max) {
+		if(n == null) {
+			return null;
+		}
+		else if(n.right == null) {
+			max.value = n.value;
+			TreeNode result = n.left;
+			n.left = null;
+			size--;
+			return result;
+		} else {
+			n.right = removeMax(n.right, max);
+			return n;
+		}
+	}
+	
+	public void remove(E value) {
+		
+		if(isEmpty()) {
+			throw new IllegalStateException("nothing to remove");
+		}
+		
+		root = remove(root, value);
+	}
+	
+	private TreeNode remove(TreeNode n, E value) {
+		if(n == null) {
+			return null;
+		} else if(n.value.compareTo(value) == 1) {
+			n.left = remove(n.left, value);
+			return n;
+		} else if(n.value.compareTo(value) == -1) {
+			n.right = remove(n.right, value);
+			return n;
+		} else {
+			// match
+			if(n.left == null) {
+				TreeNode result = n.right;
+				n.right = null;
+				size--;
+				return result;
+			} else if(n.right == null) {
+				TreeNode result = n.left;
+				n.left = null;
+				size--;
+				return result;
+			} else {
+				TreeNode minNode = new TreeNode(null);
+				minNode.right = removeMin(n.right, minNode);
+				minNode.left = n.left;
+				n.right = n.left = null;
+				return minNode;
+			}
+		}
 	}
 }

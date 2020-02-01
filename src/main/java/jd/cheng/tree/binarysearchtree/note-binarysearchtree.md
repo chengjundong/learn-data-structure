@@ -66,3 +66,37 @@
 前，中，后序遍历属于深度优先遍历，会access到最底层，然后逐级向上返回
 ### 广度优先遍历
 层序遍历，实际应用：最短路径搜索
+
+## 删除
+### 查找最小值
+从root开始，向左搜索，直到某个node的left为null，那么这个node就是最小值
+### 删除最小值
+- 如果最小值是叶子，直接删除
+- 如果最小值还有右子树，删除后，将右子树替换到它的位置
+
+### 最大值
+从root开始，向右搜索，直到某个node的right为null，那么这个node就是最大值
+### 删除最大值
+- 叶子，直接删除
+- 有左子树，删除后，将左子树替换它的位置
+
+### 删除任意节点
+```
+IF n.left == null
+	THEN remove n & return n.right
+ELSE IF n.right == null
+	THEN remove n & return n.left
+ELSE
+	do hibbard deletion
+```
+#### Hibbard Deletion
+在二叉搜索树中，当要删除的节点，既有左子，又有右子的时候。删除步骤如下：
+1. 找到要删除的节点N
+2. 找到N的右子树的最小值的节点X
+3. 记录并删除X
+4. 创建一个新节点M，M.value = X.value
+5. 将N的左右子树都挂在M上
+6. 删除N
+7. 返回M
+
+*参考，[Hibbard Deletion](https://www.ucloud.cn/yun/77241.html)*
