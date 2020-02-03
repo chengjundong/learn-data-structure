@@ -35,7 +35,6 @@ public class JaredArrayQueue implements JaredQueue {
 		return this.data.size();
 	}
 
-	@Override
 	public int showCapacity() {
 		return this.data.showCapacity();
 	}

@@ -6,6 +6,5 @@ public interface JaredQueue {
 	int dequeue();
 	int getFront();
 	int size();
-	int showCapacity();
 	boolean isEmpty();
 }

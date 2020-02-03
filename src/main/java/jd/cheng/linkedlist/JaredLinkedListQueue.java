@@ -32,12 +32,6 @@ public class JaredLinkedListQueue implements JaredQueue {
 	}
 
 	@Override
-	public int showCapacity() {
-		// no need
-		return -1;
-	}
-
-	@Override
 	public boolean isEmpty() {
 		return this.list.isEmpty();
 	}

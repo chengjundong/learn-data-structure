@@ -12,9 +12,9 @@ public class JaredQueueTest {
 
 	@Test
 	public void test_arrayQueue() throws Exception {
-		JaredQueue queue = arrayQueue(6);
+		JaredArrayQueue queue = arrayQueue(6);
 		System.out.println(queue);
-		assertThat(queue).extracting(JaredQueue::showCapacity, JaredQueue::size, JaredQueue::isEmpty)
+		assertThat(queue).extracting(JaredArrayQueue::showCapacity, JaredQueue::size, JaredQueue::isEmpty)
 				.containsExactly(6, 0, true);
 
 		queue.enqueue(100).enqueue(200).enqueue(300).enqueue(400).enqueue(500);
@@ -23,7 +23,7 @@ public class JaredQueueTest {
 		assertThat(queue.dequeue()).isEqualTo(100);
 		assertThat(queue.dequeue()).isEqualTo(200);
 		assertThat(queue.getFront()).isEqualTo(300);
-		assertThat(queue).extracting(JaredQueue::showCapacity, JaredQueue::size, JaredQueue::isEmpty)
+		assertThat(queue).extracting(JaredArrayQueue::showCapacity, JaredQueue::size, JaredQueue::isEmpty)
 				.containsExactly(6, 3, false);
 
 		System.out.println(queue);

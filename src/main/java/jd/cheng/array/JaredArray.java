@@ -146,4 +146,14 @@ public class JaredArray {
 		}
 		return new StringBuffer().append('[').append(sj.toString()).append(']').toString();
 	}
+	
+	public static JaredArray copyOf(int[] input) {
+		if(input == null || input.length == 0) {
+			throw new IllegalArgumentException("can't copy from an empty array");
+		}
+		JaredArray result = new JaredArray();
+		result.data = input;
+		result.size = input.length;
+		return result;
+	}
 }

@@ -76,7 +76,6 @@ public class JaredLoopQueue implements JaredQueue {
 		return this.size;
 	}
 
-	@Override
 	public int showCapacity() {
 		return this.data.length - 1;
 	}
