@@ -346,4 +346,20 @@ public class JaredBinarySearchTree<E extends Comparable<E>> {
 			}
 		}
 	}
+	
+	public void set(E key) {
+		set(root, key);
+	}
+	
+	private void set(TreeNode n, E value) {
+		if(n == null) {
+			return;
+		} else if(n.value.compareTo(value) > 0) {
+			set(n.left, value);
+		} else if(n.value.compareTo(value) < 0) {
+			set(n.right, value);
+		} else {
+			n.value = value;
+		}
+	}
 }
