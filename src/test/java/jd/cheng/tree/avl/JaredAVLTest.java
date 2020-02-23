@@ -39,6 +39,7 @@ public class JaredAVLTest {
 			}
 		}
 		
+		System.out.println(avl.size());
 		System.out.println("AVL ms: " + sw.stop().elapsed(TimeUnit.MILLISECONDS));
 		
 		// check AVL status after init

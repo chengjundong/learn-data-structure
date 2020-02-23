@@ -10,13 +10,13 @@ public class JaredBinarySearchTreeTest {
 
 	@Test
 	public void test() {
-		JaredBinarySearchTree<Integer> tree = new JaredBinarySearchTree<>();
+		JaredBinarySearchTree<Integer, Integer> tree = new JaredBinarySearchTree<>();
 		
 		assertThat(tree)
 			.extracting(JaredBinarySearchTree::size, JaredBinarySearchTree::isEmpty)
 			.containsExactly(0, true);
 		
-		tree.add(50).add(30).add(60).add(10).add(40).add(60).add(70).add(100);
+		tree.add(50, 50).add(30, 30).add(60,60).add(10,10).add(40,40).add(60,60).add(70,70).add(100,100);
 		assertThat(tree.isEmpty()).isFalse();
 		assertThat(tree)
 			.extracting(JaredBinarySearchTree::size, JaredBinarySearchTree::isEmpty)
@@ -34,7 +34,7 @@ public class JaredBinarySearchTreeTest {
 	
 	@Test
 	public void testRemoveMin() throws Exception {
-		JaredBinarySearchTree<Integer> tree = new JaredBinarySearchTree<>();
+		JaredBinarySearchTree<Integer, Integer> tree = new JaredBinarySearchTree<>();
 		Integer min = null;
 		for(int i = 1000; i>0; i--) {
 			int n = ThreadLocalRandom.current().nextInt(10000000);
@@ -43,7 +43,7 @@ public class JaredBinarySearchTreeTest {
 			} else if(min - n > 0) {
 				min = n;
 			}
-			tree.add(n);
+			tree.add(n, n);
 		}
 		assertThat(tree.size()).isEqualTo(1000);
 		assertThat(tree.removeMin()).isEqualTo(min);
@@ -52,7 +52,7 @@ public class JaredBinarySearchTreeTest {
 	
 	@Test
 	public void testRemoveMax() throws Exception {
-		JaredBinarySearchTree<Integer> tree = new JaredBinarySearchTree<>();
+		JaredBinarySearchTree<Integer, Integer> tree = new JaredBinarySearchTree<>();
 		Integer max = null;
 		for(int i = 1000; i>0; i--) {
 			int n = ThreadLocalRandom.current().nextInt(10000000);
@@ -61,7 +61,7 @@ public class JaredBinarySearchTreeTest {
 			} else if(n - max > 0) {
 				max = n;
 			}
-			tree.add(n);
+			tree.add(n, n);
 		}
 		assertThat(tree.size()).isEqualTo(1000);
 		assertThat(tree.removeMax()).isEqualTo(max);
@@ -70,9 +70,9 @@ public class JaredBinarySearchTreeTest {
 	
 	@Test
 	public void testRemove() throws Exception {
-		JaredBinarySearchTree<Integer> tree = new JaredBinarySearchTree<>();
-		tree.add(0).add(5).add(4).add(2).add(1).add(3)
-			.add(8).add(7).add(6).add(9).add(10);
+		JaredBinarySearchTree<Integer, Integer> tree = new JaredBinarySearchTree<>();
+		tree.add(0,0).add(5,5).add(4,4).add(2,2).add(1,1).add(3,3)
+			.add(8,8).add(7,7).add(6,6).add(9,9).add(10,10);
 		
 		tree.remove(4);
 		tree.inOrder();

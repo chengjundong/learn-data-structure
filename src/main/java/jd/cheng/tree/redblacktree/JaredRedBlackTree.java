@@ -1,19 +1,26 @@
-package jd.cheng.tree.binarysearchtree;
+package jd.cheng.tree.redblacktree;
 
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.StringJoiner;
 
-public class JaredBinarySearchTree<K extends Comparable<K>, V> {
+public class JaredRedBlackTree<K extends Comparable<K>, V> {
 
+	private static enum Color {
+		RED, BLACK;
+	}
+	
 	private class TreeNode {
 		private K key;
 		private V value;
 		private TreeNode left;
 		private TreeNode right;
+		private Color color;
 		
 		public TreeNode(K key, V value) {
 			this.key = key;
+			this.value = value;
+			this.color = Color.RED;
 		}
 		
 		/**
@@ -21,17 +28,20 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 		 */
 		@Override
 		public String toString() {
-			return String.format("[%s | %s]", key, value);
+			return String.format("[key: %s | value: %s | color : %s]", key, value, color);
 		}
 		
+		private void flipColor() {
+			if(color == Color.RED) {
+				color = Color.BLACK;
+			} else {
+				color = Color.RED;
+			}
+		}
 	}
 	
 	private TreeNode root;
 	private int size;
-	
-	public JaredBinarySearchTree() {
-		
-	}
 	
 	public boolean isEmpty() {
 		return 0 == this.size;
@@ -40,17 +50,22 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 	public int size() {
 		return this.size;
 	}
+	
+	private boolean isRed(TreeNode n) {
+		return null == n ? false : n.color == Color.RED;
+	}
 
 	/**
 	 * add element to tree by recursion
 	 * 
 	 * @param e
 	 */
-	public JaredBinarySearchTree<K,V> add(K key, V value) {
+	public JaredRedBlackTree<K,V> add(K key, V value) {
 		if(null == key) {
 			throw new IllegalArgumentException("invalid input: NULL!");
 		}
 		root = addByRecursion(root, key, value);
+		root.color = Color.BLACK;
 		return this;
 	}
 	
@@ -70,8 +85,63 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 			node.right = addByRecursion(node.right, key, value);
 		}
 		
-		// return self since no self-value change
+		// 3 steps to keep red-black tree
+		// 1. left-rotation
+		// 2. right-rotation
+		// 3. filp color
+		
+		if(isRed(node.right)) {
+			node = leftRotation(node);
+		}
+		
+		if(isRed(node.left) && isRed(node.left.left)) {
+			node = rightRotation(node);
+		}
+		
+		if(isRed(node.left) && isRed(node.right)) {
+			flipColor(node);
+		}
+		
 		return node;
+	}
+	
+	private TreeNode leftRotation(TreeNode node) {
+		if(node.right == null) {
+			throw new IllegalStateException("invalid state to do left-rotation");
+		}
+		
+		TreeNode result = node.right;
+		
+		node.right = node.right.left;
+		result.left = node;
+		result.color = node.color;
+		node.color = Color.RED;
+		
+		return result;
+	}
+	
+	private TreeNode rightRotation(TreeNode node) {
+		if(node.left == null) {
+			throw new IllegalStateException("invalid state to do right-rotation");
+		}
+		
+		TreeNode result = node.left;
+		node.left = result.right;
+		result.right = node;
+		result.color = node.color;
+		node.color = Color.RED;
+		
+		return result;
+	}
+	
+	private void flipColor(TreeNode node) {
+		if(node.left != null && node.right != null) {
+			node.color = Color.RED;
+			node.left.flipColor();
+			node.right.flipColor();
+		} else {
+			throw new IllegalStateException("invalid state to do filp-color");
+		}
 	}
 	
 	public boolean contains(K e) {
@@ -114,7 +184,7 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 	 * mid -> left -> right
 	 * @return self
 	 */
-	public JaredBinarySearchTree<K, V> preOrder() {
+	public JaredRedBlackTree<K, V> preOrder() {
 		System.out.print("pre-order traverse: ");
 		preOrder(root);
 		System.out.println();
@@ -135,7 +205,7 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 	 * left -> mid -> right
 	 * @return self
 	 */
-	public JaredBinarySearchTree<K, V> inOrder() {
+	public JaredRedBlackTree<K, V> inOrder() {
 		System.out.print("in-order traverse: ");
 		inOrder(root);
 		System.out.println();
@@ -154,7 +224,7 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 	 * left -> right -> mid
 	 * @return self
 	 */
-	public JaredBinarySearchTree<K, V> postOrder() {
+	public JaredRedBlackTree<K, V> postOrder() {
 		System.out.print("post-order traverse: ");
 		postOrder(root);
 		System.out.println();
@@ -180,7 +250,7 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 	 * 
 	 * @return self
 	 */
-	public JaredBinarySearchTree<K, V> preOrderByStack() {
+	public JaredRedBlackTree<K, V> preOrderByStack() {
 		// empty tree, skip
 		if(isEmpty()) {
 			return this;
@@ -210,7 +280,7 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 	 * 
 	 * @return self
 	 */
-	public JaredBinarySearchTree<K, V> levelOrder() {
+	public JaredRedBlackTree<K, V> levelOrder() {
 		if(isEmpty()) {
 			return this;
 		}
@@ -272,6 +342,7 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 		}
 		else if(n.left == null) {
 			min.key = n.key;
+			min.value = n.value;
 			TreeNode result = n.right;
 			n.right = null;
 			size--;
@@ -298,6 +369,7 @@ public class JaredBinarySearchTree<K extends Comparable<K>, V> {
 		}
 		else if(n.right == null) {
 			max.key = n.key;
+			max.value = n.value;
 			TreeNode result = n.left;
 			n.left = null;
 			size--;
