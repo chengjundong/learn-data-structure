@@ -1,6 +1,6 @@
 package jd.cheng.tree.redblacktree;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.google.common.base.Stopwatch;
 
+import jd.cheng.hashtable.JaredHashTable;
 import jd.cheng.tree.avl.JaredAVL;
 import jd.cheng.tree.avl.JaredAVLTest;
 
@@ -56,11 +57,12 @@ public class JaredRedBlackTreeTest {
 	} 
 	
 	@Test
-	public void testAVLAndRedBlack() throws Exception {
+	public void testAVLAndRedBlackAndHashTable() throws Exception {
 		JaredRedBlackTree<String, Integer> rbtree = new JaredRedBlackTree<>();
 		JaredAVL<String, Integer> avl = new JaredAVL<>();
+		JaredHashTable<String,Integer> hashTable = new JaredHashTable<>();
 		
-		// load a novel into AVL
+		// load a novel
 		List<String> words = new ArrayList<>();
 		try(InputStream is = JaredAVLTest.class.getResourceAsStream("/Grandet.txt")) {
 			for(String word : IOUtils.toString(is, StandardCharsets.UTF_8).split(" ")) {
@@ -93,22 +95,42 @@ public class JaredRedBlackTreeTest {
 		
 		System.out.println("AVL ADD ms: " + sw.stop().elapsed(TimeUnit.MILLISECONDS));
 		
-		assertThat(rbtree.size()).isEqualTo(avl.size());
+		// hashtable
+		sw.reset().start();
+		for(String word : words) {
+			if(hashTable.contains(word)) {
+				hashTable.put(word, hashTable.get(word)+1);
+			} else {
+				hashTable.put(word, 1);
+			}
+		}
+		
+		System.out.println("HashTable ADD ms: " + sw.stop().elapsed(TimeUnit.MILLISECONDS));
+		
+		assertThat(rbtree.size()).isEqualTo(avl.size()).isEqualTo(hashTable.size());
 		
 		// compare query
 		sw.reset().start();
-		for(int i=10; i>0; i--) {			
+		for(int i=10; i>0; i--) {
 			for(String word : words) {
 				rbtree.get(word);
 			}
 		}
 		System.out.println("red-black FIND ms: " + sw.stop().elapsed(TimeUnit.MILLISECONDS));
 		sw.reset().start();
-		for(int i=10; i>0; i--) {			
+		for(int i=10; i>0; i--) {
 			for(String word : words) {
 				avl.get(word);
 			}
 		}
 		System.out.println("AVL FIND ms: " + sw.stop().elapsed(TimeUnit.MILLISECONDS));
+		
+		sw.reset().start();
+		for(int i=10; i>0; i--) {
+			for(String word : words) {
+				hashTable.get(word);
+			}
+		}
+		System.out.println("HashTable FIND ms: " + sw.stop().elapsed(TimeUnit.MILLISECONDS));
 	}
 }

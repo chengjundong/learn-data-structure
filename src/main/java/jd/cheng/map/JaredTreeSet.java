@@ -2,26 +2,26 @@ package jd.cheng.map;
 
 import jd.cheng.tree.binarysearchtree.JaredBinarySearchTree;
 
-public class JaredTreeSet<T extends Comparable<T>> implements JaredSet<T> {
+public class JaredTreeSet<K extends Comparable<K>> implements JaredSet<K> {
 
-	private JaredBinarySearchTree<T> tree;
+	private JaredBinarySearchTree<K, Object> tree;
 	
 	public JaredTreeSet() {
 		tree = new JaredBinarySearchTree<>();
 	}
 
 	@Override
-	public void add(T e) {
-		tree.add(e);
+	public void add(K e) {
+		tree.add(e, new Object());
 	}
 
 	@Override
-	public void remove(T e) {
+	public void remove(K e) {
 		tree.remove(e);
 	}
 
 	@Override
-	public boolean contains(T e) {
+	public boolean contains(K e) {
 		return tree.contains(e);
 	}
 
