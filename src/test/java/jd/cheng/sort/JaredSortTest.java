@@ -21,7 +21,7 @@ public class JaredSortTest {
 		// do test
 		this.test(new JaredSelectionSort());
 		this.test(new JaredInsertionSort());
-		this.test(new JaredBubbleSort());
+		this.test(new JaredMergeSort());
 	}
 	
 	/**
