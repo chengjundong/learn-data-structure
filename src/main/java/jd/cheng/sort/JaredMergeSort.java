@@ -1,7 +1,5 @@
 package jd.cheng.sort;
 
-import org.junit.Test;
-
 /**
  * Merge sort: O(nlogn)
  * 
@@ -17,57 +15,58 @@ public class JaredMergeSort implements JaredSort {
 			// no need sort
 			return input;
 		} else {
-			return spliteAndMerge(input);
+			spliteAndMerge(input, 0, input.length-1);
+			return input;
 		}
 	}
 
-	@Test
-	private int[] spliteAndMerge(int[] input) {
+	// optimization, we could use insertion sort when the length is very low
+	private void spliteAndMerge(int[] input, int start, int end) {
 		// end recursion
-		if(1 == input.length) {
-			return input;
+		if(start >= end) {
+			return;
 		}
 		
-		// split
-		int lLength = input.length / 2;
-		int rLength = input.length - lLength;
-		int[] l = new int[lLength];
-		int[] r = new int[rLength];
-		
-		for(int i=0; i<l.length; i++) {
-			l[i] = input[i];
-		}
-		
-		for(int i=lLength; i<input.length; i++) {
-			r[i - lLength] = input[i];
-		}
+		int mid = start + (end-start)/2;
 		
 		// recursion
-		l = spliteAndMerge(l);
-		r = spliteAndMerge(r);
+		// split into two parts: left and right
+		spliteAndMerge(input, start, mid);
+		spliteAndMerge(input, mid+1, end);
 		
 		// merge
-		int[] result = new int[input.length];
-		for(int i = 0,j = 0,k = 0; k < result.length; k++) {
-			if(i >= l.length && j >= r.length) {
+		// it is an optimization, when the max of left is smaller than the min of right
+		// we don't need to do merge because it is already sorted
+		if(input[mid] > input[mid+1]) {			
+			merge(input, start, mid, end);
+		}
+	}
+	
+	private void merge(int[] input, int start, int mid, int end) {
+		// merge
+		int[] result = new int[end-start+1];
+		for(int i = start,j = mid+1,k = 0; k < result.length; k++) {
+			if(i > mid && j > end) {
 				break;
-			} else if(i >= l.length) {
-				result[k] = r[j];
+			} else if(i > mid) {
+				result[k] = input[j];
 				j++;
-			} else if(j >= r.length) {
-				result[k] = l[i];
+			} else if(j > end) {
+				result[k] = input[i];
 				i++;
 			} else {
-				if(l[i] > r[j]) {
-					result[k] = r[j];
+				if(input[i] > input[j]) {
+					result[k] = input[j];
 					j++;
 				} else {
-					result[k] = l[i];
+					result[k] = input[i];
 					i++;
 				}
 			}
 		}
-		
-		return result;
+		// copy to original array
+		for(int x=0, y=start; x<result.length; x++, y++) {
+			input[y] = result[x];
+		}
 	}
 }

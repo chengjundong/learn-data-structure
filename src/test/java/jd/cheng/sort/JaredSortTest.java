@@ -2,6 +2,7 @@ package jd.cheng.sort;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -19,23 +20,29 @@ public class JaredSortTest {
 		// init assertion
 		assertThat(new int[] {1,2,3}).isSorted();
 		// do test
-		this.test(new JaredSelectionSort());
-		this.test(new JaredInsertionSort());
-		this.test(new JaredMergeSort());
+		this.test(new JaredInsertionSort(), true);
+		this.test(new JaredMergeSort(), true);
+		this.test(new JaredQuickSort(), true);
 	}
 	
 	/**
-	 * To generate 10 test data, each one has 100 numbers generated randomly. Then, sort them and check the result.
+	 * To generate 10 test data, each one has 100 numbers generated randomly.
+	 * We are able to sort the test data at first, it is used to test the algorithm when the data is already sorted  
+	 * Then, sort them and check the result.
 	 * 
 	 * @param target
+	 * @param isSorted -- the test data is sorted or not
 	 */
-	private void test(JaredSort target) {
+	private void test(JaredSort target, boolean isSorted) {
 		// generate test data
 		int[][] data = new int[ARRAY_COUNT][NUMBER_PER_ARRAY];
 		
 		for(int i=0; i<ARRAY_COUNT; i++) {
 			for(int j=0; j<NUMBER_PER_ARRAY; j++) {
 				data[i][j] = ThreadLocalRandom.current().nextInt();
+			}
+			if(isSorted) {
+				Arrays.sort(data[i]);
 			}
 		}
 		
