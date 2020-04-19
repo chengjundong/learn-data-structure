@@ -1,4 +1,4 @@
-package jd.cheng.leetcod53;
+package jd.cheng.leetcode53;
 
 import static org.assertj.core.api.Assertions.*;
 
