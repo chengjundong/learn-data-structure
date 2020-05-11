@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * 
  * @author jucheng
- * @see https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/
+ * @see <a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/">remove duplicates from sorted list</a>
  *
  */
 public class Solution83 {
@@ -51,14 +51,5 @@ public class Solution83 {
 			nn = nn.next;
 		}
 		System.out.println(sj.toString());
-	}
-}
-
-class ListNode {
-	int val;
-	ListNode next;
-
-	ListNode(int x) {
-		val = x;
 	}
 }
