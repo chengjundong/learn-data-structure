@@ -2,6 +2,7 @@ package jd.cheng.leetcode.algorithm;
 
 import java.util.StringJoiner;
 
+import jd.cheng.leetcode.ListNode;
 import org.junit.Test;
 
 /**

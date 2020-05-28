@@ -2,11 +2,11 @@ package jd.cheng.leetcode.algorithm;
 
 import static org.assertj.core.api.Assertions.*;
 
+import jd.cheng.leetcode.TreeNode;
 import org.junit.Test;
 
 /**
  * @author jucheng
- * @see <a href="https://leetcode-cn.com/problems/invert-binary-tree/">翻转二叉树</a>
  */
 public class Solution226 {
 
@@ -16,8 +16,12 @@ public class Solution226 {
   }
 
   private void _invertTree(TreeNode n) {
-    if(n == null) return;
-    if(n.left == null && n.right == null) return;
+    if (n == null) {
+      return;
+    }
+    if (n.left == null && n.right == null) {
+      return;
+    }
 
     TreeNode temp = n.left;
     n.left = n.right;

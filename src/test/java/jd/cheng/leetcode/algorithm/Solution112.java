@@ -2,6 +2,7 @@ package jd.cheng.leetcode.algorithm;
 
 import static org.assertj.core.api.Assertions.*;
 
+import jd.cheng.leetcode.TreeNode;
 import org.junit.Test;
 
 /**
