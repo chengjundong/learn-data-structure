@@ -27,7 +27,7 @@ public class Solution07 {
   private TreeNode _build(int[] preorder, int preStart, int preEnd,
       int[] inorder, int inStart, int inEnd, Map<Integer, Integer> inorderIndex) {
 
-    if (preStart <= preEnd) {
+    if (preStart > preEnd) {
       return null;
     }
 
@@ -51,5 +51,12 @@ public class Solution07 {
     assertThat(n1.val).isEqualTo(2);
     assertThat(n1.left.val).isEqualTo(1);
     assertThat(n1.right.val).isEqualTo(3);
+
+    TreeNode n2 = this.buildTree(new int[]{3,9,20,15,7}, new int[]{9,3,15,20,7});
+    assertThat(n2.val).isEqualTo(3);
+    assertThat(n2.left.val).isEqualTo(9);
+    assertThat(n2.right.val).isEqualTo(20);
+    assertThat(n2.right.left.val).isEqualTo(15);
+    assertThat(n2.right.right.val).isEqualTo(7);
   }
 }
