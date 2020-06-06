@@ -1,4 +1,4 @@
-package jd.cheng.leetcode.offer04;
+package jd.cheng.leetcode.offer;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class Solution {
+public class Solution04 {
 
 	public boolean findNumberIn2DArray(int[][] matrix, int target) {
 		// validation

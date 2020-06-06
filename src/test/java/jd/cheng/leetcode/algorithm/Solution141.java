@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import jd.cheng.leetcode.ListNode;
 import org.junit.Test;
 
 /**

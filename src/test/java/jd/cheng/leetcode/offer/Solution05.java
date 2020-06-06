@@ -1,10 +1,10 @@
-package jd.cheng.leetcode.offer05;
+package jd.cheng.leetcode.offer;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class Solution {
+public class Solution05 {
 
 	public String replaceSpace(String s) {
 		

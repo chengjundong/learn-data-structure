@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import jd.cheng.leetcode.ListNode;
 import org.junit.Test;
 
 /**

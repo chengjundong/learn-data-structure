@@ -1,10 +1,10 @@
-package jd.cheng.leetcode.offer03;
+package jd.cheng.leetcode.offer;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class Solution {
+public class Solution03 {
 
 	public int findRepeatNumber(int[] nums) {
 		
