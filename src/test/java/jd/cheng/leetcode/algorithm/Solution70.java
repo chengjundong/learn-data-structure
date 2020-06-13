@@ -3,7 +3,7 @@ package jd.cheng.leetcode.algorithm;
 /**
  * 
  * @author jucheng
- * @see https://leetcode-cn.com/problems/climbing-stairs/submissions/
+ * @see <a href="https://leetcode-cn.com/problems/climbing-stairs/submissions/">link</a>
  *
  */
 public class Solution70 {
