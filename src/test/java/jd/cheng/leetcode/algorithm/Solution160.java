@@ -2,9 +2,6 @@ package jd.cheng.leetcode.algorithm;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import jd.cheng.leetcode.ListNode;
 import org.junit.Test;
 
@@ -15,36 +12,19 @@ import org.junit.Test;
 public class Solution160 {
 
   public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-    ListNode x = headA;
-    ListNode y = headB;
-
-    List<ListNode> l1 = new LinkedList<>();
-    while(x != null) {
-      l1.add(0, x);
-      x = x.next;
+    if(headA == null || headB == null) {
+      return null;
     }
 
-    List<ListNode> l2 = new LinkedList<>();
-    while(y != null) {
-      l2.add(0, y);
-      y = y.next;
+    ListNode pA = headA;
+    ListNode pB = headB;
+
+    for(;pA != pB;) {
+      pA = pA == null ? headB : pA.next;
+      pB = pB == null ? headA : pB.next;
     }
 
-    ListNode result = null;
-    Iterator<ListNode> i1 = l1.iterator();
-    Iterator<ListNode> i2 = l2.iterator();
-
-    while(i1.hasNext() && i2.hasNext()) {
-      ListNode n1 = i1.next();
-      ListNode n2 = i2.next();
-      if(n1== n2) {
-        result = n1;
-      } else {
-        break;
-      }
-    }
-
-    return result;
+    return pA;
   }
 
   @Test
